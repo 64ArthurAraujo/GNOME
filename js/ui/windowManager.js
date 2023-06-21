@@ -1841,6 +1841,29 @@ var WindowManager = class {
 
         if (!workspace.active)
             workspace.activate(global.get_current_time());
+        
+        // source: https://github.com/christopher-l/focus-follows-workspace/blob/main/extension.js
+        this.focusPrimaryMonitor();
+    }
+
+    async focusPrimaryMonitor() {
+        const activeWs = global.workspaceManager.get_active_workspace();
+        this.focusPrimaryMonitorWhenHasPointer(activeWs);
+    }
+
+    focusPrimaryMonitorWhenHasPointer(workspace) {
+        const windows = AltTab.getWindows(workspace);
+
+        const mostRecentWindowOnPrimaryMonitor = windows.find(
+            (window) => window.get_monitor() === Main.layoutManager.primaryIndex,
+        );
+
+        if (mostRecentWindowOnPrimaryMonitor) {
+            workspace.activate_with_focus(
+                mostRecentWindowOnPrimaryMonitor,
+                global.get_current_time(),
+            );
+        }
     }
 
     actionMoveWindow(window, workspace) {
