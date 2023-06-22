@@ -290,67 +290,6 @@ class WeatherSection extends St.Button {
     }
 });
 
-var MessagesIndicator = GObject.registerClass(
-class MessagesIndicator extends St.Icon {
-    _init() {
-        super._init({
-            icon_size: 16,
-            visible: false,
-            y_expand: true,
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-
-        this._sources = [];
-        this._count = 0;
-
-        this._settings = new Gio.Settings({
-            schema_id: 'org.gnome.desktop.notifications',
-        });
-        this._settings.connect('changed::show-banners', this._sync.bind(this));
-
-        Main.messageTray.connect('source-added', this._onSourceAdded.bind(this));
-        Main.messageTray.connect('source-removed', this._onSourceRemoved.bind(this));
-        Main.messageTray.connect('queue-changed', this._updateCount.bind(this));
-
-        let sources = Main.messageTray.getSources();
-        sources.forEach(source => this._onSourceAdded(null, source));
-
-        this._sync();
-
-        this.connect('destroy', () => {
-            this._settings.run_dispose();
-            this._settings = null;
-        });
-    }
-
-    _onSourceAdded(tray, source) {
-        source.connect('notify::count', this._updateCount.bind(this));
-        this._sources.push(source);
-        this._updateCount();
-    }
-
-    _onSourceRemoved(tray, source) {
-        this._sources.splice(this._sources.indexOf(source), 1);
-        this._updateCount();
-    }
-
-    _updateCount() {
-        let count = 0;
-        this._sources.forEach(source => (count += source.unseenCount));
-        this._count = count - Main.messageTray.queueCount;
-
-        this._sync();
-    }
-
-    _sync() {
-        let doNotDisturb = !this._settings.get_boolean('show-banners');
-        this.icon_name = doNotDisturb
-            ? 'notifications-disabled-symbolic'
-            : 'message-indicator-symbolic';
-        this.visible = doNotDisturb || this._count > 0;
-    }
-});
-
 var FreezableBinLayout = GObject.registerClass(
 class FreezableBinLayout extends Clutter.BinLayout {
     _init() {
@@ -421,21 +360,11 @@ class DateMenuButton extends PanelMenu.Button {
         this._clockDisplay.clutter_text.y_align = Clutter.ActorAlign.CENTER;
         this._clockDisplay.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
 
-        this._indicator = new MessagesIndicator();
-
         const indicatorPad = new St.Widget();
-        this._indicator.bind_property('visible',
-            indicatorPad, 'visible',
-            GObject.BindingFlags.SYNC_CREATE);
-        indicatorPad.add_constraint(new Clutter.BindConstraint({
-            source: this._indicator,
-            coordinate: Clutter.BindCoordinate.SIZE,
-        }));
 
         let box = new St.BoxLayout({ style_class: 'clock-display-box' });
         box.add_actor(indicatorPad);
         box.add_actor(this._clockDisplay);
-        box.add_actor(this._indicator);
 
         this.label_actor = this._clockDisplay;
         this.add_actor(box);
@@ -466,11 +395,6 @@ class DateMenuButton extends PanelMenu.Button {
             }
         });
 
-        // Fill up the first column
-        this._messageList = new Calendar.CalendarMessageList();
-        hbox.add_child(this._messageList);
-
-        // Fill up the second column
         const boxLayout = new CalendarColumnLayout([this._calendar, this._date]);
         const vbox = new St.Widget({
             style_class: 'datemenu-calendar-column',
