@@ -12,7 +12,6 @@ const St = imports.gi.St;
 const Animation = imports.ui.animation;
 const { AppMenu } = imports.ui.appMenu;
 const Config = imports.misc.config;
-const CtrlAltTab = imports.ui.ctrlAltTab;
 const DND = imports.ui.dnd;
 const Overview = imports.ui.overview;
 const PopupMenu = imports.ui.popupMenu;
@@ -490,8 +489,6 @@ class Panel extends St.Widget {
         });
 
         Main.layoutManager.panelBox.add(this);
-        Main.ctrlAltTabManager.addGroup(this, _("Top Bar"), 'focus-top-bar-symbolic',
-                                        { sortGroup: CtrlAltTab.SortGroup.TOP });
 
         Main.sessionMode.connect('updated', this._updatePanel.bind(this));
 

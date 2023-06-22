@@ -1,7 +1,6 @@
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
-/* exported componentManager, notificationDaemon, windowAttentionHandler,
-            ctrlAltTabManager, padOsdService, osdWindowManager,
-            osdMonitorLabeler, shellMountOpDBusService, shellDBusService,
+/* exported componentManager, notificationDaemon, windowAttentionHandler, padOsdService, 
+            osdWindowManager, osdMonitorLabeler, shellMountOpDBusService, shellDBusService,
             shellAccessDialogDBusService, shellAudioSelectionDBusService,
             screenSaverDBus, uiGroup, magnifier, xdndHandler, keyboard,
             kbdA11yDialog, introspectService, start, pushModal, popModal,
@@ -20,7 +19,6 @@ const St = imports.gi.St;
 const AccessDialog = imports.ui.accessDialog;
 const AudioDeviceSelection = imports.ui.audioDeviceSelection;
 const Components = imports.ui.components;
-const CtrlAltTab = imports.ui.ctrlAltTab;
 const EndSessionDialog = imports.ui.endSessionDialog;
 const ExtensionSystem = imports.ui.extensionSystem;
 const ExtensionDownloader = imports.ui.extensionDownloader;
@@ -77,7 +75,6 @@ var messageTray = null;
 var screenShield = null;
 var notificationDaemon = null;
 var windowAttentionHandler = null;
-var ctrlAltTabManager = null;
 var padOsdService = null;
 var osdWindowManager = null;
 var osdMonitorLabeler = null;
@@ -234,7 +231,6 @@ function _initializeUI() {
 
     padOsdService = new PadOsd.PadOsdService();
     xdndHandler = new XdndHandler.XdndHandler();
-    ctrlAltTabManager = new CtrlAltTab.CtrlAltTabManager();
     osdWindowManager = new OsdWindow.OsdWindowManager();
     osdMonitorLabeler = new OsdMonitorLabeler.OsdMonitorLabeler();
     overview = new Overview.Overview();

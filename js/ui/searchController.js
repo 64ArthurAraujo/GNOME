@@ -87,7 +87,6 @@ var SearchController = GObject.registerClass({
 
         this._searchResults = new Search.SearchResultsView();
         this.add_child(this._searchResults);
-        Main.ctrlAltTabManager.addGroup(this._entry, _('Search'), 'edit-find-symbolic');
 
         // Since the entry isn't inside the results container we install this
         // dummy widget as the last results container child so that we can

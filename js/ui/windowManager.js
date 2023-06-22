@@ -1687,8 +1687,10 @@ var WindowManager = class {
             tabPopup.destroy();
     }
 
+
+    // TODO: unimplement this
     _startA11ySwitcher(display, window, binding) {
-        Main.ctrlAltTabManager.popup(binding.is_reversed(), binding.get_name(), binding.get_mask());
+        return;
     }
 
     _allowFavoriteShortcuts() {

@@ -32,7 +32,6 @@ const St = imports.gi.St;
 const AuthPrompt = imports.gdm.authPrompt;
 const Batch = imports.gdm.batch;
 const BoxPointer = imports.ui.boxpointer;
-const CtrlAltTab = imports.ui.ctrlAltTab;
 const GdmUtil = imports.gdm.util;
 const Layout = imports.ui.layout;
 const LoginManager = imports.misc.loginManager;
@@ -1262,10 +1261,6 @@ var LoginDialog = GObject.registerClass({
     }
 
     open() {
-        Main.ctrlAltTabManager.addGroup(this,
-                                        _("Login Window"),
-                                        'dialog-password-symbolic',
-                                        { sortGroup: CtrlAltTab.SortGroup.MIDDLE });
         this.activate();
 
         this.opacity = 0;
@@ -1284,7 +1279,6 @@ var LoginDialog = GObject.registerClass({
     close() {
         Main.popModal(this._grab);
         this._grab = null;
-        Main.ctrlAltTabManager.removeGroup(this);
     }
 
     cancel() {

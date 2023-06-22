@@ -400,10 +400,6 @@ var Dash = GObject.registerClass({
             this._onWindowDragEnd.bind(this));
         Main.overview.connect('window-drag-end',
             this._onWindowDragEnd.bind(this));
-
-        // Translators: this is the name of the dock/favorites area on
-        // the left of the overview
-        Main.ctrlAltTabManager.addGroup(this, _("Dash"), 'user-bookmarks-symbolic');
     }
 
     _onItemDragBegin() {
