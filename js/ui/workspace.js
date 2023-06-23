@@ -1363,8 +1363,8 @@ class Workspace extends St.Widget {
         clone.connect('show-chrome', () => {
             let focus = global.stage.key_focus;
             if (focus == null || this.contains(focus)) {
-                clone.grab_key_focus();
                 clone.metaWindow.activate(global.get_current_time());
+                clone.grab_key_focus();
             }
 
             this._windows.forEach(c => {
