@@ -171,7 +171,7 @@ var WindowPreview = GObject.registerClass({
         this._title.add_constraint(new Clutter.BindConstraint({
             source: windowContainer,
             coordinate: Clutter.BindCoordinate.Y,
-            offset: scaleFactor * (iconBottomOverlap + ICON_TITLE_SPACING),
+            offset: (scaleFactor * (iconBottomOverlap + ICON_TITLE_SPACING)) * -3.5,
         }));
         this._title.add_constraint(new Clutter.AlignConstraint({
             source: windowContainer,
