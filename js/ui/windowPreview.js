@@ -63,7 +63,6 @@ var WindowPreview = GObject.registerClass({
             pivot_point: new Graphene.Point({ x: 0.5, y: 0.5 }),
         });
         this.window_container = windowContainer;
-
         windowContainer.connect('notify::scale-x',
             () => this._adjustOverlayOffsets());
         // gjs currently can't handle setting an actors layout manager during
@@ -117,7 +116,12 @@ var WindowPreview = GObject.registerClass({
         this.inDrag = false;
 
         let clickAction = new Clutter.ClickAction();
-        clickAction.connect('clicked', () => this._activate());
+        clickAction.connect('clicked', action => {
+            if (action.get_button() === 1) {
+                this._activate();
+            } else this._deleteAll(); 
+        });
+
         clickAction.connect('long-press', (action, actor, state) => {
             if (state === Clutter.LongPressState.ACTIVATE)
                 this.showOverlay(true);

@@ -39,6 +39,8 @@ install_data('gnome-shell-extension-prefs',
 )
 
 gnome_shell_cflags = [
+  '-O3',
+  '-march=skylake',
   '-DCLUTTER_ENABLE_EXPERIMENTAL_API',
   '-DCOGL_ENABLE_EXPERIMENTAL_API',
   '-DVERSION="@0@"'.format(meson.project_version()),
