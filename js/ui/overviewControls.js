@@ -47,6 +47,8 @@ class ControlsManagerLayout extends Clutter.BoxLayout {
         this._searchController = searchController;
         this._dash = dash;
 
+        this._dash.visible = false;
+
         this._cachedWorkspaceBoxes = new Map();
         this._postAllocationCallbacks = [];
 
