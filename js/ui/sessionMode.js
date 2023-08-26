@@ -58,8 +58,8 @@ const _modes = {
             ? ['networkAgent', 'polkitAgent']
             : ['polkitAgent'],
         panel: {
-            left: [],
-            center: ['dateMenu'],
+            left: ['dateMenu'],
+            center: [],
             right: ['dwellClick', 'a11y', 'keyboard', 'quickSettings'],
         },
         panelStyle: 'login-screen',
@@ -93,8 +93,8 @@ const _modes = {
         unlockDialog: imports.ui.unlockDialog.UnlockDialog,
         components: USER_SESSION_COMPONENTS,
         panel: {
-            left: ['activities'],
-            center: ['dateMenu'],
+            left: ['dateMenu'],
+            center: [],
             right: ['screenRecording', 'screenSharing', 'dwellClick', 'a11y', 'keyboard', 'quickSettings'],
         },
     },
