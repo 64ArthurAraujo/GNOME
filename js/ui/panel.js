@@ -254,85 +254,6 @@ var AppMenuButton = GObject.registerClass({
     }
 });
 
-var ActivitiesButton = GObject.registerClass(
-class ActivitiesButton extends PanelMenu.Button {
-    _init() {
-        super._init(0.0, null, true);
-        this.accessible_role = Atk.Role.TOGGLE_BUTTON;
-
-        this.name = 'panelActivities';
-
-        /* Translators: If there is no suitable word for "Activities"
-           in your language, you can use the word for "Overview". */
-        this._label = new St.Label({
-            text: _('Activities'),
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        this.add_actor(this._label);
-
-        this.label_actor = this._label;
-
-        Main.overview.connect('showing', () => {
-            this.add_style_pseudo_class('overview');
-            this.add_accessible_state(Atk.StateType.CHECKED);
-        });
-        Main.overview.connect('hiding', () => {
-            this.remove_style_pseudo_class('overview');
-            this.remove_accessible_state(Atk.StateType.CHECKED);
-        });
-
-        this._xdndTimeOut = 0;
-    }
-
-    handleDragOver(source, _actor, _x, _y, _time) {
-        if (source != Main.xdndHandler)
-            return DND.DragMotionResult.CONTINUE;
-
-        if (this._xdndTimeOut != 0)
-            GLib.source_remove(this._xdndTimeOut);
-        this._xdndTimeOut = GLib.timeout_add(GLib.PRIORITY_DEFAULT, BUTTON_DND_ACTIVATION_TIMEOUT, () => {
-            this._xdndToggleOverview();
-        });
-        GLib.Source.set_name_by_id(this._xdndTimeOut, '[gnome-shell] this._xdndToggleOverview');
-
-        return DND.DragMotionResult.CONTINUE;
-    }
-
-    vfunc_event(event) {
-        if (event.type() == Clutter.EventType.TOUCH_END ||
-            event.type() == Clutter.EventType.BUTTON_RELEASE) {
-            if (Main.overview.shouldToggleByCornerOrButton())
-                Main.overview.toggle();
-        }
-
-        return Clutter.EVENT_PROPAGATE;
-    }
-
-    vfunc_key_release_event(keyEvent) {
-        let symbol = keyEvent.keyval;
-        if (symbol == Clutter.KEY_Return || symbol == Clutter.KEY_space) {
-            if (Main.overview.shouldToggleByCornerOrButton()) {
-                Main.overview.toggle();
-                return Clutter.EVENT_STOP;
-            }
-        }
-
-        return Clutter.EVENT_PROPAGATE;
-    }
-
-    _xdndToggleOverview() {
-        let [x, y] = global.get_pointer();
-        let pickedActor = global.stage.get_actor_at_pos(Clutter.PickMode.REACTIVE, x, y);
-
-        if (pickedActor == this && Main.overview.shouldToggleByCornerOrButton())
-            Main.overview.toggle();
-
-        GLib.source_remove(this._xdndTimeOut);
-        this._xdndTimeOut = 0;
-        return GLib.SOURCE_REMOVE;
-    }
-});
-
 const UnsafeModeIndicator = GObject.registerClass(
 class UnsafeModeIndicator extends SystemIndicator {
     _init() {
@@ -444,7 +365,6 @@ class QuickSettings extends PanelMenu.Button {
 });
 
 const PANEL_ITEM_IMPLEMENTATIONS = {
-    'activities': ActivitiesButton,
     'appMenu': AppMenuButton,
     'quickSettings': QuickSettings,
     'dateMenu': DateMenuButton,
