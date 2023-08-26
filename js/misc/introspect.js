@@ -44,6 +44,13 @@ var IntrospectService = class {
                         () => {
                             this._activeApplicationDirty = true;
                             this._syncRunningApplications();
+
+                            let activeWorkspace = global.workspace_manager.get_active_workspace_index();
+                            let windowsOnWorkspace = global.get_window_actors().filter(w => w.meta_window.get_workspace().index() === activeWorkspace && w.meta_window.get_window_type() !== Meta.WindowType.DESKTOP);
+
+                            if (windowsOnWorkspace.length === 1 && !windowsOnWorkspace[0].meta_window.maximized_horizontally && !windowsOnWorkspace[0].meta_window.maximized_vertically) {
+                                windowsOnWorkspace[0].meta_window.maximize(Meta.MaximizeFlags.BOTH);
+                            }
                         });
 
         tracker.connect('tracked-windows-changed',
