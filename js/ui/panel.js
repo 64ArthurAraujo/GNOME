@@ -43,7 +43,7 @@ var APP_MENU_ICON_MARGIN = 0;
 
 var BUTTON_DND_ACTIVATION_TIMEOUT = 250;
 
-const N_QUICK_SETTINGS_COLUMNS = 2;
+const N_QUICK_SETTINGS_COLUMNS = 1;
 
 /**
  * AppMenuButton:
@@ -365,7 +365,6 @@ class QuickSettings extends PanelMenu.Button {
 });
 
 const PANEL_ITEM_IMPLEMENTATIONS = {
-    'appMenu': AppMenuButton,
     'quickSettings': QuickSettings,
     'dateMenu': DateMenuButton,
     'a11y': ATIndicator,
