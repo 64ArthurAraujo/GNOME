@@ -1,0 +1,1 @@
+cp -r subprojects/extensions/* .local/share/gnome-shell/extesions/
