@@ -220,11 +220,9 @@ var WindowPreview = GObject.registerClass({
             pivot_point: new Graphene.Point({ x: -1, y: 0.5 }),
             factor: 0,
         }));
-        this._closeButton.connect('clicked', () => this._deleteAll());
 
         this.add_child(this._title);
         this.add_child(this._icon);
-        this.add_child(this._closeButton);
 
         this._overviewAdjustment.connectObject(
             'notify::value', () => this._updateIconScale(), this);
