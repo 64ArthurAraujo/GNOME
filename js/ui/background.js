@@ -714,6 +714,9 @@ var BackgroundManager = class BackgroundManager extends Signals.EventEmitter {
 
         this.backgroundActor = this._createBackgroundActor();
         this._newBackgroundActor = null;
+
+        this.backgroundActor.opacity = 0;
+        this.backgroundActor.visible = false;
     }
 
     destroy() {
@@ -799,8 +802,8 @@ var BackgroundManager = class BackgroundManager extends Signals.EventEmitter {
         backgroundActor.content.set({
             background,
             vignette: this._vignette,
-            vignette_sharpness: 0.5,
-            brightness: 0.5,
+            vignette_sharpness: 100,
+            brightness: 100,
         });
 
         this._container.add_child(backgroundActor);

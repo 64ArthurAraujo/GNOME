@@ -949,8 +949,8 @@ class WorkspaceBackground extends Shell.WorkspaceBackground {
     _init(monitorIndex, stateAdjustment) {
         super._init({
             style_class: 'workspace-background',
-            x_expand: true,
-            y_expand: true,
+            x_expand: false,
+            y_expand: false,
             monitor_index: monitorIndex,
         });
 
@@ -1005,24 +1005,11 @@ class WorkspaceBackground extends Shell.WorkspaceBackground {
     }
 
     _updateBorderRadius() {
-        const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
-        const cornerRadius = scaleFactor * BACKGROUND_CORNER_RADIUS_PIXELS;
 
-        const backgroundContent = this._bgManager.backgroundActor.content;
-        backgroundContent.rounded_clip_radius =
-            Util.lerp(0, cornerRadius, this._stateAdjustment.value);
     }
 
     _updateRoundedClipBounds() {
-        const monitor = Main.layoutManager.monitors[this._monitorIndex];
 
-        const rect = new Graphene.Rect();
-        rect.origin.x = this._workarea.x - monitor.x;
-        rect.origin.y = this._workarea.y - monitor.y;
-        rect.size.width = this._workarea.width;
-        rect.size.height = this._workarea.height;
-
-        this._bgManager.backgroundActor.content.set_rounded_clip_bounds(rect);
     }
 
     _onDestroy() {
