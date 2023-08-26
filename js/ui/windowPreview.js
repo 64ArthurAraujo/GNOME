@@ -155,7 +155,7 @@ var WindowPreview = GObject.registerClass({
         this._icon.add_constraint(new Clutter.AlignConstraint({
             source: windowContainer,
             align_axis: Clutter.AlignAxis.Y_AXIS,
-            pivot_point: new Graphene.Point({ x: -1, y: ICON_OVERLAP }),
+            pivot_point: new Graphene.Point({ x: -5, y: ICON_OVERLAP }),
             factor: 1,
         }));
 
@@ -175,7 +175,7 @@ var WindowPreview = GObject.registerClass({
         this._title.add_constraint(new Clutter.BindConstraint({
             source: windowContainer,
             coordinate: Clutter.BindCoordinate.Y,
-            offset: (scaleFactor * (iconBottomOverlap + ICON_TITLE_SPACING)) * -3.5,
+            offset: (scaleFactor * (iconBottomOverlap + ICON_TITLE_SPACING)) * -4.25,
         }));
         this._title.add_constraint(new Clutter.AlignConstraint({
             source: windowContainer,
