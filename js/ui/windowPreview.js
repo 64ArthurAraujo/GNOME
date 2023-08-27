@@ -158,6 +158,7 @@ var WindowPreview = GObject.registerClass({
             pivot_point: new Graphene.Point({ x: -5, y: ICON_OVERLAP }),
             factor: 1,
         }));
+        this._icon.connect('enter-event', () => this._activate());
 
         const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
         this._title = new St.Label({
